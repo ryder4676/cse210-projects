@@ -32,7 +32,7 @@ class Program
     // Function to prompt the user for their favorite number and return it
     static int GetInteger()
     {
-        Console.WriteLine("What is your favorite number? ");
+        Console.Write("What is your favorite number? ");
         string numberInput = Console.ReadLine();
         int userNumber = int.Parse(numberInput);
         return userNumber;
