@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.IO;
 using System.Linq; // For ToList() method
+using MongoDB.Driver;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Journal journal = new Journal();
+        MongoClient mongoClient = new MongoClient("mongodb+srv://ryder4676:ryder4676@cluster4676.pzplknn.mongodb.net/journalling");
+        // Assuming you have created a MongoClient and obtained a database instance
+        IMongoDatabase database = mongoClient.GetDatabase("journaling");
+        Journal journal = new Journal(database);
         List<string> prompts = LoadPromptsFromFile("prompts.txt");
 
         Random random = new Random();
@@ -21,8 +25,8 @@ class Program
             Console.WriteLine("2. Display the journal");
             Console.WriteLine("3. Save journal to a file ");
             Console.WriteLine("4. Load journal from a file ");
-            Console.WriteLine("5. Save journal to MongoDB");// ######## EXCEED REQUIREMENTS BY ADDING A SAVE TO MONGODB CALLED FROM JOURNAL>CS ########
-            Console.WriteLine("6. Get journal from MongoDB");// #######################################################################################
+            Console.WriteLine("5. Save journal to MongoDB");// ######## EXCEED REQUIREMENTS BY ADDING A SAVE TO MONGODB CALLED FROM JOURNAL.CS ########
+            Console.WriteLine("6. Get journal from MongoDB");//####### EXCEED REQUIREMENTS BY ADDING A GET FROM MONGODB CALLED FROM JOURNAL.CS ########
             Console.WriteLine("7. Exit Program ");
 
             int choice = int.Parse(Console.ReadLine());
@@ -65,7 +69,13 @@ class Program
                     journal.SaveToMongoDB();
                     break;
                 case 6:
-                    // Add logic to retrieve entries from MongoDB
+                    // Retrieving entries from MongoDB
+                    List<JournalEntry> entriesFromMongoDB = journal.GetEntriesFromMongoDB();
+                    // Now you can use the entries as needed
+                    foreach (var entry in entriesFromMongoDB)
+                    {
+                        Console.WriteLine(entry);
+                    }
                     break;
                 case 7: 
                     Console.WriteLine("Thanks for journalling today, Bye!");

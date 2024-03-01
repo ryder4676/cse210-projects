@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 public class Journal
@@ -13,11 +14,11 @@ public class Journal
     private IMongoCollection<JournalEntry> collection;
 
     // Constructor to initialize the list of journal entries.
-    public Journal()
+    public Journal(IMongoDatabase database)
     {
         entries = new List<JournalEntry>();
         mongoClient = new MongoClient("mongodb+srv://ryder4676:ryder4676@cluster4676.pzplknn.mongodb.net/journalling"); // Replace with your MongoDB connection string
-        database = mongoClient.GetDatabase("journaling"); // Replace with your MongoDB database name
+        this.database = database; // Replace with your MongoDB database name
         collection = database.GetCollection<JournalEntry>("JournalEntries");
     }
 
