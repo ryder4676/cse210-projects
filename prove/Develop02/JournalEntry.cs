@@ -12,8 +12,8 @@ public class JournalEntry
     // Constructor to initialize a new JournalEntry with the specified prompt, response, and date.
     public JournalEntry(string prompt, string response, string date)
     {
-        Prompt = prompt;
-        Response = response;
+        Prompt = prompt?.Trim();
+        Response = response?.Trim();
         Date = date;
     }
     

@@ -1,16 +1,24 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using MongoDB.Driver;
 
 public class Journal
 {
     // private keyword is an access modifier that restricts the visibility of a member (variable, method, or property) to the containing class
     private List<JournalEntry> entries;
+     private MongoClient mongoClient;
+    private IMongoDatabase database;
+    private IMongoCollection<JournalEntry> collection;
 
     // Constructor to initialize the list of journal entries.
     public Journal()
     {
         entries = new List<JournalEntry>();
+        mongoClient = new MongoClient("mongodb+srv://ryder4676:ryder4676@cluster4676.pzplknn.mongodb.net/journalling"); // Replace with your MongoDB connection string
+        database = mongoClient.GetDatabase("journaling"); // Replace with your MongoDB database name
+        collection = database.GetCollection<JournalEntry>("JournalEntries");
     }
 
     // Method to add a new journal entry to the list.
@@ -37,7 +45,7 @@ public class Journal
             foreach (var entry in entries)
             {
                 // Writing formatted entry data to the file.
-                writer.WriteLine($"{entry.Date}, {entry.Prompt}, {entry.Response}");
+                writer.WriteLine($"{entry.Date}   {entry.Prompt}   {entry.Response}");
                 
             }
         }Console.WriteLine($"Sucessfully saved to: {filename}!");
@@ -57,8 +65,8 @@ public class Journal
                 // Reading lines until the end of the file.
                 while (!reader.EndOfStream)
                 {
-                    // Splitting the line into parts based on commas. Based on the text file
-                    string[] parts = reader.ReadLine().Split(",");
+                    // Splitting the line into parts based on colons. Based on the text file
+                    string[] parts = reader.ReadLine().Split(new[] {"   "}, StringSplitOptions.None);
                     
                     // Checking if the line has three parts (Date, Prompt, Response). In the text file.
                     if (parts.Length == 3)
@@ -77,4 +85,20 @@ public class Journal
             Console.WriteLine("File not found. Please enter a correct filename");
         }
     }
+    public void SaveToMongoDB()
+    {
+        var collection = database.GetCollection<JournalEntry>("JournalEntries");
+        foreach (var entry in entries){
+            collection.InsertOne(entry);
+        }
+        Console.WriteLine("Sucessfully wrote to mongoDB!");
+    }
+    public List<JournalEntry> GetEntriesFromMongoDB()
+        {
+            var filter = Builders<JournalEntry>.Filter.Empty;
+            var entriesFromMongoDB = collection.Find(filter).ToList();
+            return entriesFromMongoDB;
+        }
+   
+
 }

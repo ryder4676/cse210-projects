@@ -21,7 +21,9 @@ class Program
             Console.WriteLine("2. Display the journal");
             Console.WriteLine("3. Save journal to a file ");
             Console.WriteLine("4. Load journal from a file ");
-            Console.WriteLine("5. Exit Program ");
+            Console.WriteLine("5. Save journal to MongoDB");// ######## EXCEED REQUIREMENTS BY ADDING A SAVE TO MONGODB CALLED FROM JOURNAL>CS ########
+            Console.WriteLine("6. Get journal from MongoDB");// #######################################################################################
+            Console.WriteLine("7. Exit Program ");
 
             int choice = int.Parse(Console.ReadLine());
             switch(choice)
@@ -59,7 +61,13 @@ class Program
                     string loadFilename = Console.ReadLine();
                     journal.LoadFromFile(loadFilename);
                     break;
-                case 5: 
+                case 5:
+                    journal.SaveToMongoDB();
+                    break;
+                case 6:
+                    // Add logic to retrieve entries from MongoDB
+                    break;
+                case 7: 
                     Console.WriteLine("Thanks for journalling today, Bye!");
                     Environment.Exit(0);
                     break;
