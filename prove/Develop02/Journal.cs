@@ -4,6 +4,7 @@ using System.IO;
 
 public class Journal
 {
+    // private keyword is an access modifier that restricts the visibility of a member (variable, method, or property) to the containing class
     private List<JournalEntry> entries;
 
     // Constructor to initialize the list of journal entries.
@@ -37,8 +38,9 @@ public class Journal
             {
                 // Writing formatted entry data to the file.
                 writer.WriteLine($"{entry.Date}, {entry.Prompt}, {entry.Response}");
+                
             }
-        }
+        }Console.WriteLine($"Sucessfully saved to: {filename}!");
     }
 
     // Method to load journal entries from a file.
@@ -71,7 +73,7 @@ public class Journal
         catch (FileNotFoundException)
         {
             // Handling the case where the file is not found.
-            Console.WriteLine("File not found. Creating a new journal.");
+            Console.WriteLine("File not found. Please enter a correct filename");
         }
     }
 }

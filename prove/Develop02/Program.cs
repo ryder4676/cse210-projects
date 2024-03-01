@@ -15,10 +15,10 @@ class Program
         while (true)
         {   
             Console.WriteLine("Choose what you want to do:\n");
-            // sets the options available for the user
+            // sets the choices available for the user
             Console.WriteLine("1. Write a new journal entry ");
             Console.WriteLine("2. Display the journal");
-            Console.WriteLine("3.Save journal to a file ");
+            Console.WriteLine("3. Save journal to a file ");
             Console.WriteLine("4. Load journal from a file ");
             Console.WriteLine("5. Exit Program ");
 
@@ -59,6 +59,7 @@ class Program
                     journal.LoadFromFile(loadFilename);
                     break;
                 case 5: 
+                    Console.WriteLine("Thanks for journalling today, Bye!");
                     Environment.Exit(0);
                     break;
                 default:
@@ -69,9 +70,11 @@ class Program
 
     } 
     // Function to load prompts from a file
-    // Function to load prompts from a file
 static List<string> LoadPromptsFromFile(string filename)
 {
+    //This line declares and initializes a new List<string> named prompts.
+    // List<string> is a generic collection in C# that can hold a sequence of elements of type string.
+    // Here, it is intended to store a collection of prompts.
     List<string> prompts = new List<string>();
     try
     {
@@ -80,10 +83,10 @@ static List<string> LoadPromptsFromFile(string filename)
     } 
     catch (FileNotFoundException)
     {
-        Console.WriteLine($"File '{filename}' not found. Returning an empty list.");
-        // It's okay to return an empty list here, but you might also choose to provide default prompts instead.
+        Console.WriteLine($"File '{filename}' not found.");
+        
     }
-    // Catch other potential exceptions as needed
+    
     return prompts;
 }
 
