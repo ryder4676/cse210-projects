@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq; // For ToList() method
 
@@ -79,7 +80,7 @@ static List<string> LoadPromptsFromFile(string filename)
     try
     {
         // This requires 'using System.Linq;' for .ToList()
-        prompts = File.ReadAllLines(filename).ToList();
+        prompts = File.ReadAllLines(filename).Select(line => line.Trim()).ToList();
     } 
     catch (FileNotFoundException)
     {

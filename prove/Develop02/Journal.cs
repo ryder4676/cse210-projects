@@ -57,10 +57,10 @@ public class Journal
                 // Reading lines until the end of the file.
                 while (!reader.EndOfStream)
                 {
-                    // Splitting the line into parts based on commas.
+                    // Splitting the line into parts based on commas. Based on the text file
                     string[] parts = reader.ReadLine().Split(",");
                     
-                    // Checking if the line has three parts (Date, Prompt, Response).
+                    // Checking if the line has three parts (Date, Prompt, Response). In the text file.
                     if (parts.Length == 3)
                     {
                         // Creating a new JournalEntry object and adding it to the list.
@@ -69,6 +69,7 @@ public class Journal
                     }
                 }
             }
+            Console.WriteLine($"Sucessfully Loaded: {filename}");
         }
         catch (FileNotFoundException)
         {
