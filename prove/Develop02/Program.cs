@@ -9,10 +9,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        MongoClient mongoClient = new MongoClient("mongodb+srv://ryder4676:ryder4676@cluster4676.pzplknn.mongodb.net/journalling");
+        
+        string connectionString = File.ReadAllText("connectionString.txt");
+        MongoClient mongoClient = new MongoClient(connectionString);
         // Assuming you have created a MongoClient and obtained a database instance
         IMongoDatabase database = mongoClient.GetDatabase("journaling");
-        Journal journal = new Journal(database);
+        Journal journal = new Journal(connectionString, database.DatabaseNamespace.DatabaseName);
         List<string> prompts = LoadPromptsFromFile("prompts.txt");
 
         Random random = new Random();
@@ -26,7 +28,7 @@ class Program
             Console.WriteLine("3. Save journal to a file ");
             Console.WriteLine("4. Load journal from a file ");
             Console.WriteLine("5. Save journal to MongoDB");// ######## EXCEED REQUIREMENTS BY ADDING A SAVE TO MONGODB CALLED FROM JOURNAL.CS ########
-            Console.WriteLine("6. Get journal from MongoDB");//####### EXCEED REQUIREMENTS BY ADDING A GET FROM MONGODB CALLED FROM JOURNAL.CS ########
+            Console.WriteLine("6. Load journal from MongoDB");//####### EXCEED REQUIREMENTS BY ADDING A GET FROM MONGODB CALLED FROM JOURNAL.CS ########
             Console.WriteLine("7. Exit Program ");
 
             int choice = int.Parse(Console.ReadLine());

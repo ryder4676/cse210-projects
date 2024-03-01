@@ -14,11 +14,11 @@ public class Journal
     private IMongoCollection<JournalEntry> collection;
 
     // Constructor to initialize the list of journal entries.
-    public Journal(IMongoDatabase database)
+     public Journal(string connectionString, string databaseName)
     {
         entries = new List<JournalEntry>();
-        mongoClient = new MongoClient("mongodb+srv://ryder4676:ryder4676@cluster4676.pzplknn.mongodb.net/journalling"); // Replace with your MongoDB connection string
-        this.database = database; // Replace with your MongoDB database name
+        mongoClient = new MongoClient(connectionString);
+        database = mongoClient.GetDatabase(databaseName);
         collection = database.GetCollection<JournalEntry>("JournalEntries");
     }
 
