@@ -31,9 +31,16 @@ public class Journal
     // Method to display all journal entries in the console.
     public void DisplayEntries()
     {
-        foreach (var entry in entries)
+        if (entries.Count == 0)
         {
-            Console.WriteLine(entry);
+            Console.WriteLine("!! No journal entries found !!");
+        }
+        else
+        {
+            foreach (var entry in entries)
+            {
+                Console.WriteLine(entry);
+            }
         }
     }
 
