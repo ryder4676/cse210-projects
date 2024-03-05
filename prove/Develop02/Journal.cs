@@ -9,7 +9,7 @@ public class Journal
 {
     // private keyword is an access modifier that restricts the visibility of a member (variable, method, or property) to the containing class
     private List<JournalEntry> entries;
-     private MongoClient mongoClient;
+    private MongoClient mongoClient;
     private IMongoDatabase database;
     private IMongoCollection<JournalEntry> collection;
 
