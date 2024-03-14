@@ -5,8 +5,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        var reference = new Reference("John", 3, 16);
-        var scriptureText = "For God so loved the world that He gave His one and only Son";
+        var reference = new Reference("James", 1,5,6);
+        var scriptureText = "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him. But let him ask in faith, nothing wavering. For he that wavereth is like a wave of the sea driven with the wind and tossed.";
         var scripture = new Scripture(reference, scriptureText);
 
         while (true)
