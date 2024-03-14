@@ -4,22 +4,32 @@ using System.Linq; // For LINQ methods, such as .Select()
 
 public class Word
 {
-    public string Text { get; private set; }
-    public bool IsHidden { get; private set; }
+    private string _word;
+    private bool _isHidden;
 
-    public Word(string text)
+    public Word(string word)
     {
-        Text = text;
-        IsHidden = false;
+        _word = word;
+        _isHidden = false;
     }
 
     public void Hide()
     {
-        IsHidden = true;
+        _isHidden = true;
+    }
+
+    public void Show()
+    {
+        _isHidden = false;
+    }
+
+    public bool IsHidden()
+    {
+        return _isHidden;
     }
 
     public string GetDisplayText()
     {
-        return IsHidden ? new string('_', Text.Length) : Text;
+        return _isHidden ? new string('_', _word.Length) : _word;
     }
 }

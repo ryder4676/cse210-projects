@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 public class Scripture
 {
     private List<Word> _words;
@@ -15,23 +11,37 @@ public class Scripture
                               .ToList();
     }
 
-    public void HideRandomWord()
+    public void HideRandomWords(int numberToHide)
     {
-        var visibleWords = _words.Where(word => !word.IsHidden).ToList();
+        var random = new Random();
+        var visibleWords = _words.Where(word => !word.IsHidden()).ToList();
 
-        if (visibleWords.Any())
+        for (int i = 0; i < Math.Min(numberToHide, visibleWords.Count); i++)
         {
-            var random = new Random();
-            var wordToHide = visibleWords[random.Next(visibleWords.Count)];
-            wordToHide.Hide();
+            var randomIndex = random.Next(visibleWords.Count);
+            visibleWords[randomIndex].Hide();
         }
     }
 
-    public bool AreAllWordsHidden => _words.All(word => word.IsHidden);
+ public string GetDisplayText()
+{
+    string referenceText = _reference.GetDisplayText();
+    string wordsText = string.Join(" ", _words.Select(word => word.GetDisplayText()));
 
-    public string GetDisplayText()
+    // Check if there are words to display
+    if (!string.IsNullOrEmpty(wordsText))
     {
-        return $"{_reference.GetDisplayText()}: " +
-               string.Join(" ", _words.Select(word => word.GetDisplayText()));
+        return $"{referenceText} ~ {wordsText}";
+    }
+    else
+    {
+        return referenceText;
+    }
+}
+
+
+    public bool IsCompletelyHidden()
+    {
+        return _words.All(word => word.IsHidden());
     }
 }
