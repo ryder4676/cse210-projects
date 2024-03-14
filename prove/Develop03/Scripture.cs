@@ -23,22 +23,21 @@ public class Scripture
         }
     }
 
- public string GetDisplayText()
-{
-    string referenceText = _reference.GetDisplayText();
-    string wordsText = string.Join(" ", _words.Select(word => word.GetDisplayText()));
-
-    // Check if there are words to display
-    if (!string.IsNullOrEmpty(wordsText))
+    public string GetDisplayText()
     {
-        return $"{referenceText} ~ {wordsText}";
-    }
-    else
-    {
-        return referenceText;
-    }
-}
+        string referenceText = _reference.GetDisplayText();
+        string wordsText = string.Join(" ", _words.Select(word => word.GetDisplayText()));
 
+        // Check if there are words to display
+        if (!string.IsNullOrEmpty(wordsText))
+        {
+            return $"{referenceText} ~ {wordsText}";
+        }
+        else
+        {
+            return referenceText;
+        }
+    }
 
     public bool IsCompletelyHidden()
     {
