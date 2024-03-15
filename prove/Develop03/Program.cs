@@ -55,7 +55,8 @@ class Program
         Console.WriteLine("Thanks for playing!");
     }
 }
-// #####################################################################################################################
-// ###### Added a RevealWords based on the order they were hidden. #### FOR ABOVE and BEYOND assignment criteria. ######
-// ###### It how reverses  words being hidden in the order they were hidden why typed 'r'.                        ######
-// #####################################################################################################################
+// ###############################################################################################
+// ##### EXCEEDS CORE REQUIRMENTS ################################################################
+// ###### Added a RevealWords based on the order they were hidden. ###############################
+// ###### It how reverses words being hidden in the order they were hidden why typed 'r'.  ######
+// ###############################################################################################
