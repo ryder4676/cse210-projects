@@ -11,18 +11,39 @@ public class Scripture
                               .ToList();
     }
 
-    public void HideRandomWords(int numberToHide)
-    {
-        var random = new Random();
-        var visibleWords = _words.Where(word => !word.IsHidden()).ToList();
+public bool HideRandomWords(int numberToHide, Stack<int> hiddenWordIndices)
+{
+    var random = new Random();
+    var visibleWords = _words.Where((word, index) => !word.IsHidden()).ToList();
 
-        for (int i = 0; i < Math.Min(numberToHide, visibleWords.Count); i++)
-        {
-            var randomIndex = random.Next(visibleWords.Count);
-            visibleWords[randomIndex].Hide();
-        }
+    int wordsHidden = 0; // Track the number of words hidden
+
+    while (visibleWords.Count > 0 && (numberToHide == -1 || wordsHidden < numberToHide))
+    {
+        var randomIndex = random.Next(visibleWords.Count);
+        var wordIndex = _words.FindIndex(w => w == visibleWords[randomIndex]);
+        hiddenWordIndices.Push(wordIndex);
+        visibleWords[randomIndex].Hide();
+        wordsHidden++;
+
+        // Refresh the list of visible words
+        visibleWords = _words.Where((word, index) => !word.IsHidden()).ToList();
     }
 
+    return wordsHidden > 0; // Words were hidden
+}
+
+public void RevealWords(int numberToReveal, Stack<int> hiddenWordIndices)
+{
+    for (int i = 0; i < numberToReveal; i++)
+    {
+        if (hiddenWordIndices.Count == 0)
+            break;
+        
+        int lastIndex = hiddenWordIndices.Pop();
+        _words[lastIndex].Show();
+    }
+}
     public string GetDisplayText()
     {
         string referenceText = _reference.GetDisplayText();
