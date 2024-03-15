@@ -11,39 +11,39 @@ public class Scripture
                               .ToList();
     }
 
-public bool HideRandomWords(int numberToHide, Stack<int> hiddenWordIndices)
-{
-    var random = new Random();
-    var visibleWords = _words.Where((word, index) => !word.IsHidden()).ToList();
-
-    int wordsHidden = 0; // Track the number of words hidden
-
-    while (visibleWords.Count > 0 && (numberToHide == -1 || wordsHidden < numberToHide))
+    public bool HideRandomWords(int numberToHide, Stack<int> hiddenWordIndices)
     {
-        var randomIndex = random.Next(visibleWords.Count);
-        var wordIndex = _words.FindIndex(w => w == visibleWords[randomIndex]);
-        hiddenWordIndices.Push(wordIndex);
-        visibleWords[randomIndex].Hide();
-        wordsHidden++;
+        var random = new Random();
+        var visibleWords = _words.Where((word, index) => !word.IsHidden()).ToList();
 
-        // Refresh the list of visible words
-        visibleWords = _words.Where((word, index) => !word.IsHidden()).ToList();
+        int wordsHidden = 0; // Track the number of words hidden
+
+        while (visibleWords.Count > 0 && (numberToHide == -1 || wordsHidden < numberToHide))
+        {
+            var randomIndex = random.Next(visibleWords.Count);
+            var wordIndex = _words.FindIndex(w => w == visibleWords[randomIndex]);
+            hiddenWordIndices.Push(wordIndex);
+            visibleWords[randomIndex].Hide();
+            wordsHidden++;
+
+            // Refresh the list of visible words
+            visibleWords = _words.Where((word, index) => !word.IsHidden()).ToList();
+        }
+
+        return wordsHidden > 0; // Words were hidden
     }
 
-    return wordsHidden > 0; // Words were hidden
-}
-
-public void RevealWords(int numberToReveal, Stack<int> hiddenWordIndices)
-{
-    for (int i = 0; i < numberToReveal; i++)
+    public void RevealWords(int numberToReveal, Stack<int> hiddenWordIndices)
     {
-        if (hiddenWordIndices.Count == 0)
-            break;
-        
-        int lastIndex = hiddenWordIndices.Pop();
-        _words[lastIndex].Show();
+        for (int i = 0; i < numberToReveal; i++)
+        {
+            if (hiddenWordIndices.Count == 0)
+                break;
+
+            int lastIndex = hiddenWordIndices.Pop();
+            _words[lastIndex].Show();
+        }
     }
-}
     public string GetDisplayText()
     {
         string referenceText = _reference.GetDisplayText();
