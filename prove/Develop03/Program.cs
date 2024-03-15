@@ -16,7 +16,7 @@ class Program
     {
         Console.Clear();
         Console.WriteLine(scripture.GetDisplayText());
-        Console.WriteLine("\nPress 'Enter' to hide multiple words, Type 'r' and press 'Enter' to reveal hidden words, or type 'quit' and press Enter to exit program.");
+        Console.WriteLine("\nPress 'Enter' to hide multiple words, Type 'r' and press 'Enter' to reveal hidden words, or Type 'quit' and press Enter to exit program.");
 
         var input = Console.ReadLine()?.ToLower();
 
