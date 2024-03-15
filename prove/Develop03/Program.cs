@@ -27,7 +27,7 @@ class Program
 
             var input = Console.ReadLine()?.ToLower();
 
-            if (input == "") // Hide multiple words
+            if (input == "") // Like having Enter as the input
             {
                 int wordsToHide = 3; // Number of words to hide
                 if (!scripture.HideRandomWords(wordsToHide, hiddenWordIndices))
@@ -57,4 +57,5 @@ class Program
 }
 // #####################################################################################################################
 // ###### Added a RevealWords based on the order they were hidden. #### FOR ABOVE and BEYOND assignment criteria. ######
-// ###### It
+// ###### It how reverses  words being hidden in the order they were hidden why typed 'r'.                        ######
+// #####################################################################################################################

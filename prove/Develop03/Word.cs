@@ -33,6 +33,7 @@ public class Word
     }
 
     // Method to get the display text of the word (either hidden or revealed)
+    // returns the expression new string("_", _word.Length), which creates a string consisting of underscores (_) with the same length as _word.
     public string GetDisplayText()
     {
         return _isHidden ? new string('_', _word.Length) : _word;
