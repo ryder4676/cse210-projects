@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 class ListingActivity : Activity
 {
     private List<string> _prompts = new List<string> {
@@ -17,7 +20,7 @@ class ListingActivity : Activity
         base.DisplayStartingMessage();
         string prompt = GetRandomPrompt();
         DisplayPrompt(prompt);
-        Thread.Sleep(3000); // Wait for 3 seconds before asking the user to start listing
+        Console.WriteLine("Start listing items. Press Enter after each item.");
         int itemCount = GetListFromUser();
         DisplayItemCount(itemCount);
         base.DisplayEndingMessage();
@@ -37,27 +40,32 @@ class ListingActivity : Activity
 
     private int GetListFromUser()
     {
-        Console.WriteLine("Start listing items. Press Enter after each item. Enter 'done' when finished.");
         List<string> items = new List<string>();
         string input;
-        int elapsedTime = 0;
         int itemCount = 0;
+        DateTime startTime = DateTime.Now;
 
-        while (elapsedTime < _duration)
+        while (true)
         {
+
+
+            // Read the input directly
             input = Console.ReadLine();
-            if (input.ToLower() == "done")
-                break;
             items.Add(input);
             itemCount++;
-            elapsedTime += 3; // Assume 3 seconds per item, adjust as needed
+           
+                TimeSpan elapsedTime = DateTime.Now - startTime;
+                if (elapsedTime.TotalSeconds >= _duration)
+                    break;// Increment item count
+            
         }
 
         return itemCount;
     }
 
-    private void DisplayItemCount(int count)
+    private void DisplayItemCount(int itemCount)
     {
-        Console.WriteLine($"You listed {count} items.");
+        Console.WriteLine($"You listed {itemCount} items.");
     }
 }
+

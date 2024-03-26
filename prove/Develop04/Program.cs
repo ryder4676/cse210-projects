@@ -11,9 +11,7 @@ class Program
     {
         Console.WriteLine("Welcome to the Activity App!");
 
-        // Load prompts and questions from files
-        List<string> _prompts = LoadPromptsFromFile("reflectingPrompts.txt");
-        List<string> _questions = LoadPromptsFromFile("reflectingQuestions.txt");
+        
 
         while (true)
         {
