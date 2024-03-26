@@ -1,18 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 class ListingActivity : Activity
 {
-    private List<string> _prompts = new List<string> {
-        "Who are people that you appreciate?",
-        "What are personal strengths of yours?",
-        "Who are people that you have helped this week?",
-        "When have you felt the Holy Ghost this month?",
-        "Who are some of your personal heroes?"
-    };
+    private List<string> _prompts;
 
     public ListingActivity(int duration) : base("Listing Activity", "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.", duration)
     {
+        _prompts = LoadPromptsFromFile("listingPrompts.txt");
     }
 
     public new void Run()
@@ -47,17 +44,13 @@ class ListingActivity : Activity
 
         while (true)
         {
-
-
-            // Read the input directly
             input = Console.ReadLine();
             items.Add(input);
             itemCount++;
-           
-                TimeSpan elapsedTime = DateTime.Now - startTime;
-                if (elapsedTime.TotalSeconds >= _duration)
-                    break;// Increment item count
-            
+
+            TimeSpan elapsedTime = DateTime.Now - startTime;
+            if (elapsedTime.TotalSeconds >= _duration)
+                break;
         }
 
         return itemCount;
@@ -67,5 +60,21 @@ class ListingActivity : Activity
     {
         Console.WriteLine($"You listed {itemCount} items.");
     }
+
+    public static List<string> LoadPromptsFromFile(string filename)
+    {
+        List<string> prompts = new List<string>();
+        try
+        {
+            prompts = File.ReadAllLines(filename).ToList();
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine($"File '{filename}' not found.");
+        }
+
+        return prompts;
+    }
 }
+
 
