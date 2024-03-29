@@ -13,6 +13,7 @@ public abstract class Goal
         _shortName = name;
         _description = description;
         _points = points;
+
     }
     // Method to get the short name of the goal
     public string GetShortName()
@@ -23,7 +24,6 @@ public abstract class Goal
     {
         return _points;
     }
-
     // Abstract method to be implemented by subclasses to handle recording of events
     public abstract void RecordEvent();
 

@@ -69,7 +69,7 @@ public class GoalManager
     {
         Console.WriteLine("Goal details:");
         foreach (Goal goal in _goals)
-        {
+        {   
             Console.WriteLine(goal.GetDetailsString());
         }
     }
@@ -123,20 +123,8 @@ public class GoalManager
         if (choice >= 1 && choice <= _goals.Count)
         {
             Goal goal = _goals[choice - 1];
-            int pointsEarned = 0;
-
-            // Check the type of goal and handle accordingly
-            if (goal is SimpleGoal)
-            {
-                SimpleGoal simpleGoal = (SimpleGoal)goal; // Cast to SimpleGoal
-                simpleGoal.RecordEvent(); // Call the RecordEvent method of SimpleGoal
-                pointsEarned = simpleGoal.GetPoints(); // Retrieve points using the GetPoints method
-            }
-            else
-            {
-                pointsEarned = goal.GetPoints(); // Call the RecordEvent method of the selected goal
-            }
-
+            goal.RecordEvent(); // Call RecordEvent to mark the goal as complete
+            int pointsEarned = goal.GetPoints(); // Call the RecordEvent method of the selected goal
             _score += pointsEarned; // Add the points earned to the total score
             Console.WriteLine($"Congratulations! Event recorded successfully! You earned {pointsEarned} points.");
         }
@@ -145,8 +133,6 @@ public class GoalManager
             Console.WriteLine("Invalid choice.");
         }
     }
-
-
 
     public void SaveGoals()
     {
@@ -157,7 +143,7 @@ public class GoalManager
                 writer.WriteLine(goal.GetStringRepresentation());
             }
         }
-        Console.WriteLine("Goals saved to file.");
+        Console.WriteLine("Goals saved to file goals.txt.");
     }
     public void LoadGoals()
     {

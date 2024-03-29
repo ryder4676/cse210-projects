@@ -7,14 +7,11 @@ public class SimpleGoal : Goal
     // Constructor to initialize SimpleGoal with name, description, and points
     public SimpleGoal(string name, string description, int points) : base(name, description, points)
     {
-        _isComplete = false; // Initialize _isComplete to false
+        _isComplete = false;
     }
     public override void RecordEvent()
     {
-        if (!_isComplete)
-        {
-            _isComplete = true;
-        }
+        _isComplete = true; // Update _isComplete to true when the goal is recorded
     }
     public override bool IsComplete()
     {
