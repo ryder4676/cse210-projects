@@ -55,7 +55,7 @@ public class GoalManager
     }
     public void DisplayPlayerInfo()
     {
-        Console.WriteLine("You have " + _score + " points.");
+        Console.WriteLine($"You have {_score} points.");
     }
     public void ListGoalNames()
     {
@@ -75,7 +75,7 @@ public class GoalManager
     }
     public void CreateGoal()
     {
-        Console.WriteLine("\nThe types of goals are to create are:");
+        Console.WriteLine("\nThe types of goals to create are:");
         Console.WriteLine("1. Simple Goal");
         Console.WriteLine("2. Eternal Goal");
         Console.WriteLine("3. Checklist Goal");
@@ -123,15 +123,30 @@ public class GoalManager
         if (choice >= 1 && choice <= _goals.Count)
         {
             Goal goal = _goals[choice - 1];
-            goal.RecordEvent(); // Call the RecordEvent method of the selected goal
-            Console.WriteLine("Congratulations! Event recorded successfully!");
-            
+            int pointsEarned = 0;
+
+            // Check the type of goal and handle accordingly
+            if (goal is SimpleGoal)
+            {
+                SimpleGoal simpleGoal = (SimpleGoal)goal; // Cast to SimpleGoal
+                simpleGoal.RecordEvent(); // Call the RecordEvent method of SimpleGoal
+                pointsEarned = simpleGoal.GetPoints(); // Retrieve points using the GetPoints method
+            }
+            else
+            {
+                pointsEarned = goal.GetPoints(); // Call the RecordEvent method of the selected goal
+            }
+
+            _score += pointsEarned; // Add the points earned to the total score
+            Console.WriteLine($"Congratulations! Event recorded successfully! You earned {pointsEarned} points.");
         }
         else
         {
             Console.WriteLine("Invalid choice.");
         }
     }
+
+
 
     public void SaveGoals()
     {
