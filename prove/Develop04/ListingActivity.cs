@@ -12,7 +12,7 @@ class ListingActivity : Activity
         _prompts = LoadPromptsFromFile("listingPrompts.txt");
     }
 
-    public new void Run()
+    public void Run()
     {
         base.DisplayStartingMessage();
         string prompt = GetRandomPrompt();
