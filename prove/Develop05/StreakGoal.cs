@@ -23,27 +23,26 @@ public class StreakGoal : Goal
     }
     public override void RecordEvent()
     {
-        // Increment current streak and check if it meets or exceeds the streak target
-        _currentStreak++;
-        if (_currentStreak >= _streakTarget)
+        DateTime today = DateTime.Today;
+
+        if (_recordedDateTime.Date == today.AddDays(-1)) // Check if the previous event was recorded yesterday
         {
-            // Get the points for the completed streak from the map
-            if (StreakPointsMap.TryGetValue(_streakTarget, out int streakPoints))
-            {
-                _points += streakPoints;
-                Console.WriteLine($"Congratulations! Streak goal '{_shortName}' completed for {_streakTarget} days. Bonus points added: {streakPoints}");
-            }
-            else
-            {
-                Console.WriteLine($"Error: Points for {_streakTarget}-day streak not found in the map.");
-            }
-            // Reset current streak
-            _currentStreak = 0;
+            _currentStreak++; // Increment streak if recorded on consecutive days
         }
         else
         {
-            Console.WriteLine($"Streak goal '{_shortName}' current streak: {_currentStreak} day(s).");
+            _currentStreak = 1; // Reset streak if not recorded on consecutive days
         }
+
+        _recordedDateTime = DateTime.Now;
+
+        if (_currentStreak >= _streakTarget)
+        {
+            // Handle streak completion
+        }
+
+        // Print the current streak
+        Console.WriteLine($"Streak goal '{_shortName}' current streak: {_currentStreak} day(s).");
     }
 
     public override bool IsComplete()
@@ -58,8 +57,11 @@ public class StreakGoal : Goal
 
     public override string GetStringRepresentation()
     {
-        // Convert the DateTime object to a string using a custom format
-        string recordedDateTimeString = _recordedDateTime.ToString("MM/dd/yyyy HH:mm:ss");
-        return $"Streak,{_currentStreak}{recordedDateTimeString}";
+        //     // Convert the DateTime object to a string using a custom format
+        //     string recordedDateTimeString = _recordedDateTime.ToString("MM/dd/yyyy HH:mm:ss");
+        //     return $"Streak,{_currentStreak}{recordedDateTimeString}";
+        // }
+        // Print the current streak
+        return $"Current streak: {_currentStreak} day(s).";
     }
 }
