@@ -166,22 +166,42 @@ public class GoalManager
             {
                 string[] parts = line.Split(','); // Split the line into parts using comma as delimiter
 
+                if (parts.Length < 4)
+                {
+                    Console.WriteLine("Invalid line format: " + line);
+                    continue; // Skip to the next line
+                }
+
                 string type = parts[0]; // Get the type of goal
                 string name = parts[1]; // Get the name of the goal
                 string description = parts[2]; // Get the description of the goal
                 int points = int.Parse(parts[3]); // Get the points associated with the goal
 
-                // Create the appropriate type of goal based on the type string
                 Goal goal;
                 switch (type)
                 {
                     case "SimpleGoal":
+                        if (parts.Length != 4)
+                        {
+                            Console.WriteLine("Invalid line format for SimpleGoal: " + line);
+                            continue; // Skip to the next line
+                        }
                         goal = new SimpleGoal(name, description, points);
                         break;
                     case "EternalGoal":
+                        if (parts.Length != 4)
+                        {
+                            Console.WriteLine("Invalid line format for EternalGoal: " + line);
+                            continue; // Skip to the next line
+                        }
                         goal = new EternalGoal(name, description, points);
                         break;
                     case "ChecklistGoal":
+                        if (parts.Length < 7)
+                        {
+                            Console.WriteLine("Invalid line format for ChecklistGoal: " + line);
+                            continue; // Skip to the next line
+                        }
                         int target = int.Parse(parts[4]); // Get the target for the checklist goal
                         int bonus = int.Parse(parts[5]); // Get the bonus for the checklist goal
                         int amountCompleted = int.Parse(parts[6]); // Get the amount completed for the checklist goal
@@ -189,7 +209,6 @@ public class GoalManager
                         ((ChecklistGoal)goal).SetAmountCompleted(amountCompleted); // Set the amount completed and update points
                         break;
                     default:
-                        // Handle unrecognized goal types
                         Console.WriteLine($"Unrecognized goal type: {type}");
                         continue; // Skip to the next line
                 }

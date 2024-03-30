@@ -1,1 +1,3 @@
 ChecklistGoal,eat 3 times daily,eat breakfast lunch and dinner,10,3,50,1
+SimpleGoal,heya,go do the laundry tonight,10
+EternalGoal,Eat 3 times today,eat breakfast lunch and dinner,10

@@ -36,7 +36,7 @@ public class ChecklistGoal : Goal
     {
         
         string completeness = IsComplete() ? "[x]" : "[ ]";
-        return $"{completeness} {_shortName} ({_description}) | {_amountCompleted}/{_target}";
+        return $"{completeness} {_shortName} - ({_description}) | {_amountCompleted}/{_target}";
     }
 
     public override string GetStringRepresentation()
