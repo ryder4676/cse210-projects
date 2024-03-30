@@ -6,7 +6,7 @@ class EternalGoal : Goal
     }
     public override void RecordEvent()
     {
-        _recordedDateTime = DateTime.Now;
+
     }
     public override bool IsComplete()
     {
@@ -18,8 +18,7 @@ class EternalGoal : Goal
     }
     public override string GetStringRepresentation()
     {
-        // Convert the DateTime object to a string using a custom format
-        string recordedDateTimeString = _recordedDateTime.ToString("MM/dd/yyyy HH:mm:ss");
-        return $"EternalGoal,{_shortName},{_description},{_points},{recordedDateTimeString}";
+
+        return $"EternalGoal,{_shortName},{_description},{_points}";
     }
 }

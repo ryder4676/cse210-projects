@@ -3,91 +3,91 @@ using System.Collections.Generic;
 using System.IO;
 
 
-    public class GoalManager
+public class GoalManager
+{
+    private List<Goal> _goals;
+    private int _score;
+    private LevelingSystem _levelingSystem;
+
+    public GoalManager()
     {
-        private List<Goal> _goals;
-        private int _score;
-        private LevelingSystem _levelingSystem;
+        _goals = new List<Goal>();
+        _score = 0;
+        _levelingSystem = new LevelingSystem(50); // Initialize with level increment of 50 points
+    }
 
-        public GoalManager()
+    public void Start()
+    {
+        while (true)
         {
-            _goals = new List<Goal>();
-            _score = 0;
-            _levelingSystem = new LevelingSystem(50); // Initialize with level increment of 50 points
-        }
+            Console.WriteLine($"You have {_score} points. Level {_levelingSystem.GetCurrentLevel()}");
+            Console.WriteLine("Menu Options:");
+            Console.WriteLine("1. Create New Goal");
+            Console.WriteLine("2. List Goals");
+            Console.WriteLine("3. Save Goals");
+            Console.WriteLine("4. Load Goals");
+            Console.WriteLine("5. Record Event");
+            Console.WriteLine("6. Quit");
+            Console.Write("Select a choice from the menu: ");
 
-        public void Start()
-        {
-            while (true)
+            int choice = int.Parse(Console.ReadLine());
+            string filename; // Declare the filename variable outside the switch statement
+            switch (choice)
             {
-                Console.WriteLine($"You have {_score} points. Level {_levelingSystem.GetCurrentLevel()}");
-                Console.WriteLine("Menu Options:");
-                Console.WriteLine("1. Create New Goal");
-                Console.WriteLine("2. List Goals");
-                Console.WriteLine("3. Save Goals");
-                Console.WriteLine("4. Load Goals");
-                Console.WriteLine("5. Record Event");
-                Console.WriteLine("7. Quit");
-                Console.Write("Select a choice from the menu: ");
-
-                int choice = int.Parse(Console.ReadLine());
-                string filename; // Declare the filename variable outside the switch statement
-                switch (choice)
-                {
-                    case 1:
-                        CreateGoal();
-                        break;
-                    case 2:
-                        ListGoalNames();
-                        ListGoalDetails();
-                        break;
-                    case 3:
-                        Console.Write("Enter the filename to save goals to: ");
-                        filename = Console.ReadLine(); // Use the filename variable here
-                        SaveGoals(filename);
-                        break;
-                    case 4:
-                        Console.Write("Enter the filename to load goals from: ");
-                        filename = Console.ReadLine(); // Use the same filename variable here
-                        LoadGoals(filename);
-                        break;
-                    case 5:
-                        RecordEvent();
-                        break;
-                    case 7:
-                        return;
-                    default:
-                        Console.WriteLine("Invalid choice.");
-                        break;
-                }
+                case 1:
+                    CreateGoal();
+                    break;
+                case 2:
+                    ListGoalNames();
+                    ListGoalDetails();
+                    break;
+                case 3:
+                    Console.Write("Enter the filename to save goals to: ");
+                    filename = Console.ReadLine(); // Use the filename variable here
+                    SaveGoals(filename);
+                    break;
+                case 4:
+                    Console.Write("Enter the filename to load goals from: ");
+                    filename = Console.ReadLine(); // Use the same filename variable here
+                    LoadGoals(filename);
+                    break;
+                case 5:
+                    RecordEvent();
+                    break;
+                case 6:
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice.");
+                    break;
             }
         }
+    }
 
-        public class LevelingSystem
+    public class LevelingSystem
+    {
+        private int _levelIncrement;
+        private int _currentLevel;
+
+        public LevelingSystem(int levelIncrement)
         {
-            private int _levelIncrement;
-            private int _currentLevel;
-
-            public LevelingSystem(int levelIncrement)
-            {
-                _levelIncrement = levelIncrement;
-                _currentLevel = 1; // Start at level 1
-            }
-
-            public void AddPoints(int points)
-            {
-                // Increase current level if points surpass the level increment
-                _currentLevel += points / _levelIncrement;
-            }
-
-            public int GetCurrentLevel()
-            {
-                return _currentLevel;
-            }
+            _levelIncrement = levelIncrement;
+            _currentLevel = 1; // Start at level 1
         }
 
+        public void AddPoints(int points)
+        {
+            // Increase current level if points surpass the level increment
+            _currentLevel += points / _levelIncrement;
+        }
 
-        public void DisplayPlayerInfo()
+        public int GetCurrentLevel()
+        {
+            return _currentLevel;
+        }
+    }
+
+
+    public void DisplayPlayerInfo()
     {
         Console.WriteLine($"You have {_score} points.");
         Console.WriteLine();
@@ -223,7 +223,7 @@ using System.IO;
                 switch (type)
                 {
                     case "SimpleGoal":
-                        if (parts.Length != 5)
+                        if (parts.Length != 4)
                         {
                             Console.WriteLine("Invalid line format for " + line);
                             continue; // Skip to the next line
@@ -231,7 +231,7 @@ using System.IO;
                         goal = new SimpleGoal(name, description, points);
                         break;
                     case "EternalGoal":
-                        if (parts.Length != 5)
+                        if (parts.Length != 4)
                         {
                             Console.WriteLine("Invalid line format for EternalGoal: " + line);
                             continue; // Skip to the next line
@@ -239,7 +239,7 @@ using System.IO;
                         goal = new EternalGoal(name, description, points);
                         break;
                     case "ChecklistGoal":
-                        if (parts.Length < 8)
+                        if (parts.Length < 7)
                         {
                             Console.WriteLine("Invalid line format for ChecklistGoal: " + line);
                             continue; // Skip to the next line
