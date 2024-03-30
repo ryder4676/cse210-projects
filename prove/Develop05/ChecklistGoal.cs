@@ -21,10 +21,7 @@ public class ChecklistGoal : Goal
                 _points += _bonus; // Add the bonus points
                 Console.WriteLine($"Congratulations! Goal '{_shortName}' completed {_amountCompleted} times. Bonus points added: {_bonus}");
             }
-            
-                
-                Console.WriteLine($"Goal '{_shortName}' completed {_amountCompleted} times.");
-            
+            Console.WriteLine($"Goal '{_shortName}' completed {_amountCompleted} times.");
         }
         else
         {
@@ -37,12 +34,24 @@ public class ChecklistGoal : Goal
     }
     public override string GetDetailsString()
     {
+        
         string completeness = IsComplete() ? "[x]" : "[ ]";
         return $"{completeness} {_shortName} ({_description}) | {_amountCompleted}/{_target}";
     }
 
     public override string GetStringRepresentation()
     {
-        return $"ChecklistGoal,{_shortName},{_description},{_points},{_target},{_bonus}";
+        return $"ChecklistGoal,{_shortName},{_description},{_points},{_target},{_bonus},{_amountCompleted}";
     }
+    // Method to set the amount completed
+    public void SetAmountCompleted(int amountCompleted)
+    {
+        _amountCompleted = amountCompleted;
+        if (_amountCompleted >= _target)
+        {
+            _points += _bonus; // Add the bonus points if the target is reached
+        }
+    }
+    
+
 }

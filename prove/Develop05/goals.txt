@@ -1,2 +1,1 @@
-SimpleGoal:Bedtime Routine,Get kids to bed before 11pm,10
-EternalGoal:Read scriptures Daily,Read 3 chapters before 9am,15
+ChecklistGoal,eat 3 times daily,eat breakfast lunch and dinner,10,3,50,1

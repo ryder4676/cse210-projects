@@ -28,5 +28,6 @@ public class SimpleGoal : Goal
         string completeness = _isComplete ? "[x]" : "[ ]";
         return $"{completeness} {_shortName} - ({_description})";
     }
+    
 
 }

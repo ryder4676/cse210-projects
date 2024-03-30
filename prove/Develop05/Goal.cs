@@ -24,6 +24,8 @@ public abstract class Goal
     {
         return _points;
     }
+
+
     // Abstract method to be implemented by subclasses to handle recording of events
     public abstract void RecordEvent();
 

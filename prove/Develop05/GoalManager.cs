@@ -40,7 +40,9 @@ public class GoalManager
                     SaveGoals();
                     break;
                 case 4:
-                    LoadGoals();
+                    Console.Write("Enter the filename to load goals from: ");
+                    string filename = Console.ReadLine();
+                    LoadGoals(filename);
                     break;
                 case 5:
                     RecordEvent();
@@ -109,7 +111,6 @@ public class GoalManager
                 Console.WriteLine("Invalid goal type.");
                 break;
         }
-
     }
     public void RecordEvent()
     {
@@ -155,18 +156,59 @@ public class GoalManager
         }
         Console.WriteLine("Goals saved to file goals.txt.");
     }
-    public void LoadGoals()
+    public void LoadGoals(string filename)
     {
-        // string filename, List<Goal> goals
-        // try
-        // {
-        //     goals = File.ReadAllLines(filename).ToList();
-        // }
-        // catch (FileNotFoundException)
-        // {
-        //     Console.WriteLine($"File '{filename}' not found.");
-        // }
+        try
+        {
+            string[] lines = File.ReadAllLines(filename); // Read all lines from the file
 
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(','); // Split the line into parts using comma as delimiter
 
+                string type = parts[0]; // Get the type of goal
+                string name = parts[1]; // Get the name of the goal
+                string description = parts[2]; // Get the description of the goal
+                int points = int.Parse(parts[3]); // Get the points associated with the goal
+
+                // Create the appropriate type of goal based on the type string
+                Goal goal;
+                switch (type)
+                {
+                    case "SimpleGoal":
+                        goal = new SimpleGoal(name, description, points);
+                        break;
+                    case "EternalGoal":
+                        goal = new EternalGoal(name, description, points);
+                        break;
+                    case "ChecklistGoal":
+                        int target = int.Parse(parts[4]); // Get the target for the checklist goal
+                        int bonus = int.Parse(parts[5]); // Get the bonus for the checklist goal
+                        int amountCompleted = int.Parse(parts[6]); // Get the amount completed for the checklist goal
+                        goal = new ChecklistGoal(name, description, points, target, bonus);
+                        ((ChecklistGoal)goal).SetAmountCompleted(amountCompleted); // Set the amount completed and update points
+                        break;
+                    default:
+                        // Handle unrecognized goal types
+                        Console.WriteLine($"Unrecognized goal type: {type}");
+                        continue; // Skip to the next line
+                }
+
+                _goals.Add(goal); // Add the goal to the list of goals
+            }
+
+            // Update the total score based on points of all loaded goals
+            _score = _goals.Sum(goal => goal.GetPoints());
+
+            Console.WriteLine("Goals loaded successfully.");
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine($"File '{filename}' not found.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading goals: {ex.Message}");
+        }
     }
 }
