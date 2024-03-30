@@ -53,13 +53,13 @@ public class StreakGoal : Goal
 
     public override string GetDetailsString()
     {
-        return $"[ ] {_shortName} - ({_description})";
+        return $"[ ] {_currentStreak})";
     }
 
     public override string GetStringRepresentation()
     {
         // Convert the DateTime object to a string using a custom format
         string recordedDateTimeString = _recordedDateTime.ToString("MM/dd/yyyy HH:mm:ss");
-        return $"StreakGoal:{_shortName},{_description},{_points},{_streakTarget},{_currentStreak}";
+        return $"Streak,{_currentStreak}{recordedDateTimeString}";
     }
 }

@@ -197,15 +197,15 @@ public class GoalManager
                 switch (type)
                 {
                     case "SimpleGoal":
-                        if (parts.Length != 4)
+                        if (parts.Length != 5)
                         {
-                            Console.WriteLine("Invalid line format for SimpleGoal: " + line);
+                            Console.WriteLine("Invalid line format for " + line);
                             continue; // Skip to the next line
                         }
                         goal = new SimpleGoal(name, description, points);
                         break;
                     case "EternalGoal":
-                        if (parts.Length != 4)
+                        if (parts.Length != 5)
                         {
                             Console.WriteLine("Invalid line format for EternalGoal: " + line);
                             continue; // Skip to the next line
@@ -213,7 +213,7 @@ public class GoalManager
                         goal = new EternalGoal(name, description, points);
                         break;
                     case "ChecklistGoal":
-                        if (parts.Length < 7)
+                        if (parts.Length < 8)
                         {
                             Console.WriteLine("Invalid line format for ChecklistGoal: " + line);
                             continue; // Skip to the next line
