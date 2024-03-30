@@ -32,9 +32,6 @@ public abstract class Goal
 
     // Method to generate a string with details of the goal for display in a list
     public abstract string GetDetailsString();
-    // {
-    //     return $"[ ] {_shortName}: {_description}"; // Basic details include name and description
-    // }
 
     // Abstract method to be implemented by subclasses to provide string representation of the goal
     public abstract string GetStringRepresentation();

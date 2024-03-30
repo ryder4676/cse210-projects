@@ -1,1 +1,2 @@
-SimpleGoal:Bedtime,Get kids to be,11
+SimpleGoal:Bedtime Routine,Get kids to bed before 11pm,10
+EternalGoal:Read scriptures Daily,Read 3 chapters before 9am,15

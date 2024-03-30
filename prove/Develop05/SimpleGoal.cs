@@ -20,12 +20,13 @@ public class SimpleGoal : Goal
     public override string GetStringRepresentation()
     {
         // Implement how to represent SimpleGoal as a string
-        // return $"Name: {_shortName}, Description: {_description}, Points: {_points}, IsComplete: {_isComplete}";
         return $"SimpleGoal:{_shortName},{_description},{_points}";
     }
 
     public override string GetDetailsString()
     {
-        return $"{_shortName}: {_description} (Complete: {_isComplete})";
+        string completeness = _isComplete ? "[x]" : "[ ]";
+        return $"{completeness} {_shortName} - ({_description})";
     }
+
 }

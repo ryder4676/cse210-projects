@@ -56,21 +56,22 @@ public class GoalManager
     public void DisplayPlayerInfo()
     {
         Console.WriteLine($"You have {_score} points.");
+        Console.WriteLine();
     }
     public void ListGoalNames()
     {
         Console.WriteLine("Your goals are:");
-        foreach (Goal goal in _goals)
+        for (int i = 0; i < _goals.Count; i++)
         {
-            Console.WriteLine(goal.GetShortName());
+            Console.WriteLine($"{i + 1}. {_goals[i].GetShortName()}");
         }
     }
     public void ListGoalDetails()
     {
         Console.WriteLine("Goal details:");
-        foreach (Goal goal in _goals)
-        {   
-            Console.WriteLine(goal.GetDetailsString());
+        for (int i = 0; i < _goals.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {_goals[i].GetDetailsString()}");
         }
     }
     public void CreateGoal()
@@ -79,14 +80,14 @@ public class GoalManager
         Console.WriteLine("1. Simple Goal");
         Console.WriteLine("2. Eternal Goal");
         Console.WriteLine("3. Checklist Goal");
-        Console.Write("Which type of goal would you like to create? ");
+        Console.WriteLine("Which type of goal would you like to create? ");
 
         int type = int.Parse(Console.ReadLine());
         Console.WriteLine("What is the name of your goal? ");
         string name = Console.ReadLine();
         Console.WriteLine("What is a short description of the goal? ");
         string description = Console.ReadLine();
-        Console.WriteLine("What is the amount of points associated with this goal? ");
+        Console.Write("What is the amount of points associated with this goal? ");
         int points = int.Parse(Console.ReadLine());
 
         switch (type)
@@ -115,7 +116,7 @@ public class GoalManager
         Console.WriteLine("Which goal did you accomplish? ");
         for (int i = 0; i < _goals.Count; i++)
         {
-            Console.WriteLine($"{(i + 1)}. {_goals[i].GetShortName()}");
+            Console.WriteLine($"{i + 1}. {_goals[i].GetShortName()}");
         }
 
         int choice = int.Parse(Console.ReadLine());
@@ -123,8 +124,17 @@ public class GoalManager
         if (choice >= 1 && choice <= _goals.Count)
         {
             Goal goal = _goals[choice - 1];
+            if (goal is SimpleGoal simpleGoal)
+            {
+                if (simpleGoal.IsComplete())
+                {
+                    Console.WriteLine("Simple Goals can only be completed once, and you have already been awarded the points for this goal.");
+                    return; // Exit the method without further action
+                }
+            }
+
             goal.RecordEvent(); // Call RecordEvent to mark the goal as complete
-            int pointsEarned = goal.GetPoints(); // Call the RecordEvent method of the selected goal
+            int pointsEarned = goal.GetPoints(); // Call the GetPoints method of the selected goal
             _score += pointsEarned; // Add the points earned to the total score
             Console.WriteLine($"Congratulations! Event recorded successfully! You earned {pointsEarned} points.");
         }
