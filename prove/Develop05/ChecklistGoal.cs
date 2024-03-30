@@ -11,15 +11,34 @@ public class ChecklistGoal : Goal
     }
     public override void RecordEvent()
     {
+        if (_amountCompleted < _target) // Check if the target has been reached
+        {
+            _amountCompleted++; // Increment the completed count
 
+            // Check if the target has been reached after incrementing the count
+            if (_amountCompleted == _target)
+            {
+                _points += _bonus; // Add the bonus points
+                Console.WriteLine($"Congratulations! Goal '{_shortName}' completed {_amountCompleted} times. Bonus points added: {_bonus}");
+            }
+            
+                
+                Console.WriteLine($"Goal '{_shortName}' completed {_amountCompleted} times.");
+            
+        }
+        else
+        {
+            Console.WriteLine($"Goal '{_shortName}' already completed {_target} times. No further progress can be made.");
+        }
     }
     public override bool IsComplete()
     {
-        return false;
+        return _amountCompleted >= _target;
     }
     public override string GetDetailsString()
     {
-        return $"{_shortName}: {_description} (Completed {_amountCompleted} times out of {_target})";
+        string completeness = IsComplete() ? "[x]" : "[ ]";
+        return $"{completeness} {_shortName} ({_description}) | {_amountCompleted}/{_target}";
     }
 
     public override string GetStringRepresentation()

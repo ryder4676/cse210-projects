@@ -68,7 +68,7 @@ public class GoalManager
     }
     public void ListGoalDetails()
     {
-        Console.WriteLine("Goal details:");
+        Console.WriteLine("Goal completion status:");
         for (int i = 0; i < _goals.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {_goals[i].GetDetailsString()}");
