@@ -3,6 +3,7 @@ public class ChecklistGoal : Goal
     private int _amountCompleted;
     private int _target;
     private int _bonus;
+
     public ChecklistGoal(string name, string description, int points, int target, int bonus) : base(name, description, points)
     {
         _target = target;
@@ -27,6 +28,8 @@ public class ChecklistGoal : Goal
         {
             Console.WriteLine($"Goal '{_shortName}' already completed {_target} times. No further progress can be made.");
         }
+        _recordedDateTime = DateTime.Now; // Update the recorded date and time to the current date and time
+
     }
     public override bool IsComplete()
     {
@@ -41,7 +44,9 @@ public class ChecklistGoal : Goal
 
     public override string GetStringRepresentation()
     {
-        return $"ChecklistGoal,{_shortName},{_description},{_points},{_target},{_bonus},{_amountCompleted}";
+        // Convert the DateTime object to a string using a custom format
+        string recordedDateTimeString = _recordedDateTime.ToString("MM/dd/yyyy HH:mm:ss");
+        return $"ChecklistGoal,{_shortName},{_description},{_points},{_target},{_bonus},{_amountCompleted},{recordedDateTimeString}";
     }
     // Method to set the amount completed
     public void SetAmountCompleted(int amountCompleted)

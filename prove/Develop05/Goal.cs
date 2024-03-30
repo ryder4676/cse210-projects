@@ -6,6 +6,7 @@ public abstract class Goal
     protected string _shortName;    // Short name of the goal
     protected string _description;  // Description of the goal
     protected int _points;          // Point value associated with the goal
+    protected DateTime _recordedDateTime; // Date and time when the event was recorded
 
     // Constructor to initialize the goal with name, description, and points
     public Goal(string name, string description, int points)
@@ -13,7 +14,6 @@ public abstract class Goal
         _shortName = name;
         _description = description;
         _points = points;
-
     }
     // Method to get the short name of the goal
     public string GetShortName()
@@ -24,8 +24,6 @@ public abstract class Goal
     {
         return _points;
     }
-
-
     // Abstract method to be implemented by subclasses to handle recording of events
     public abstract void RecordEvent();
 

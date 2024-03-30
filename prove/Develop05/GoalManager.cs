@@ -26,7 +26,7 @@ public class GoalManager
             Console.Write("Select a choice from the menu: ");
 
             int choice = int.Parse(Console.ReadLine());
-
+            string filename; // Declare the filename variable outside the switch statement
             switch (choice)
             {
                 case 1:
@@ -37,12 +37,15 @@ public class GoalManager
                     ListGoalDetails();
                     break;
                 case 3:
-                    SaveGoals();
+                    Console.Write("Enter the filename to save goals to: ");
+                    filename = Console.ReadLine(); // Use the filename variable here
+                    SaveGoals(filename);
                     break;
                 case 4:
                     Console.Write("Enter the filename to load goals from: ");
-                    string filename = Console.ReadLine();
+                    filename = Console.ReadLine(); // Use the same filename variable here
                     LoadGoals(filename);
+
                     break;
                 case 5:
                     RecordEvent();
@@ -107,6 +110,11 @@ public class GoalManager
                 int bonus = int.Parse(Console.ReadLine());
                 _goals.Add(new ChecklistGoal(name, description, points, target, bonus));
                 break;
+            case 4:
+                Console.WriteLine("Enter streak target:");
+                int streakTarget = int.Parse(Console.ReadLine());
+                _goals.Add(new StreakGoal(name, description, points, streakTarget));
+                break;
             default:
                 Console.WriteLine("Invalid goal type.");
                 break;
@@ -145,17 +153,25 @@ public class GoalManager
         }
     }
 
-    public void SaveGoals()
+    public void SaveGoals(string filename)
     {
-        using (StreamWriter writer = new StreamWriter("goals.txt"))
+        try
         {
-            foreach (Goal goal in _goals)
+            using (StreamWriter writer = new StreamWriter(filename))
             {
-                writer.WriteLine(goal.GetStringRepresentation());
+                foreach (Goal goal in _goals)
+                {
+                    writer.WriteLine(goal.GetStringRepresentation());
+                }
             }
+            Console.WriteLine($"Goals saved to file {filename}.");
         }
-        Console.WriteLine("Goals saved to file goals.txt.");
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving goals to file {filename}: {ex.Message}");
+        }
     }
+
     public void LoadGoals(string filename)
     {
         try
@@ -207,6 +223,12 @@ public class GoalManager
                         int amountCompleted = int.Parse(parts[6]); // Get the amount completed for the checklist goal
                         goal = new ChecklistGoal(name, description, points, target, bonus);
                         ((ChecklistGoal)goal).SetAmountCompleted(amountCompleted); // Set the amount completed and update points
+                        break;
+                    case "StreakGoal":
+                        int streakTarget = int.Parse(parts[4]); // Get the streak target
+                        int currentStreak = int.Parse(parts[5]); // Get the current streak
+                        goal = new StreakGoal(name, description, points, streakTarget);
+                        ((StreakGoal)goal).SetCurrentStreak(currentStreak); // Set the current streak
                         break;
                     default:
                         Console.WriteLine($"Unrecognized goal type: {type}");
