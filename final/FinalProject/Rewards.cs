@@ -1,34 +1,24 @@
-using System;
-
-public class Rewards
+public class Rewards : Leveling
 {
-    private decimal _previousBalance;
-
-    public Rewards()
+    public Rewards(Achievement achievement) : base(achievement)
     {
-        _previousBalance = 0;
     }
 
-    public void CheckRewards(decimal currentBalance, Account account)
+    public override void UpdateLevel(decimal amount)
     {
         decimal increment = 500;
-        decimal rewardAmount = 25;
 
-        // Check if the balance crosses multiples of $500 and deposit rewards into the checking account
-        if (currentBalance >= increment && _previousBalance < currentBalance && account is SavingsAccount || account is CheckingAccount)
+        if (amount >= increment && _previousBalance < amount)
         {
             decimal previousIncrement = Math.Floor(_previousBalance / increment);
-            decimal currentIncrement = Math.Floor(currentBalance / increment);
+            decimal currentIncrement = Math.Floor(amount / increment);
 
             if (currentIncrement > previousIncrement)
             {
-                if (account is CheckingAccount checkingAccount)
-                {
-                    checkingAccount.DepositReward(rewardAmount * (currentIncrement - previousIncrement));
-                }
+                // Reward logic specific to Rewards class
             }
         }
 
-        _previousBalance = currentBalance;
+        _previousBalance = amount;
     }
 }

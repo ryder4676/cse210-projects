@@ -5,14 +5,16 @@ using System.Timers;
 public class AccountManager
 {
     private Rewards _rewards;
-    private Leveling _leveling;
+    private Achievement _achievement;
     private List<Account> _accounts;
+    private Leveling _leveling; // Define leveling field
 
     public AccountManager()
     {
         _accounts = new List<Account>();
-        _rewards = new Rewards();
-        _leveling = new Leveling();
+        _rewards = new Rewards(_achievement);
+        _achievement = new Achievement();
+        _leveling = new Leveling(_achievement); // Initialize leveling
     }
 
     public void Start()
@@ -25,7 +27,8 @@ public class AccountManager
             Console.WriteLine("3. Withdraw");
             Console.WriteLine("4. Make Purchase");
             Console.WriteLine("5. Display Account Details");
-            Console.WriteLine("6. Quit");
+            Console.WriteLine("6. View Achievement Records");
+            Console.WriteLine("7. Quit");
             Console.Write("Select an option: ");
 
             int choice = int.Parse(Console.ReadLine());
@@ -48,6 +51,9 @@ public class AccountManager
                     DisplayAccountDetails();
                     break;
                 case 6:
+                    DisplayAchievementRecords();
+                    break;
+                case 7:
                     return;
                 default:
                     Console.WriteLine("Invalid choice.");
@@ -56,7 +62,7 @@ public class AccountManager
         }
     }
 
-    private void CreateAccount()
+    public void CreateAccount()
     {
         Console.WriteLine("\nChoose Account Type:");
         Console.WriteLine("1. Savings Account");
@@ -68,7 +74,7 @@ public class AccountManager
         switch (accountType)
         {
             case 1:
-                _accounts.Add(new SavingsAccount(_rewards, _leveling)); // Pass Rewards and Leveling instances
+                _accounts.Add(new SavingsAccount(_rewards, _leveling, _achievement));
                 break;
             case 2:
                 _accounts.Add(new CheckingAccount());
@@ -93,6 +99,7 @@ public class AccountManager
         if (account != null)
         {
             account.Deposit(amount);
+            _rewards.UpdateLevel(amount); // Update rewards after deposit
         }
         else
         {
@@ -138,11 +145,16 @@ public class AccountManager
 
     private void DisplayAccountDetails()
     {
-        Console.WriteLine($"\nAccount Details: Current Level: {_leveling.GetCurrentLevel()}");
+        Console.WriteLine("\nAccount Details:");
         foreach (var account in _accounts)
         {
             Console.WriteLine(account);
         }
+    }
+
+    private void DisplayAchievementRecords()
+    {
+        _achievement.DisplayRecords();
     }
 
     private Account FindAccount(int accountNumber)
