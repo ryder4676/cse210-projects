@@ -4,18 +4,22 @@ using System.Timers;
 
 public class AccountManager
 {
+    private Rewards _rewards;
+    private Leveling _leveling;
     private List<Account> _accounts;
 
     public AccountManager()
     {
         _accounts = new List<Account>();
+        _rewards = new Rewards();
+        _leveling = new Leveling();
     }
 
     public void Start()
     {
         while (true)
         {
-            Console.WriteLine("Account Manager Menu:");
+            Console.WriteLine("\nAccount Manager Menu:");
             Console.WriteLine("1. Create Account");
             Console.WriteLine("2. Deposit");
             Console.WriteLine("3. Withdraw");
@@ -54,7 +58,7 @@ public class AccountManager
 
     private void CreateAccount()
     {
-        Console.WriteLine("Choose Account Type:");
+        Console.WriteLine("\nChoose Account Type:");
         Console.WriteLine("1. Savings Account");
         Console.WriteLine("2. Checking Account");
         Console.WriteLine("3. Line of Credit Account");
@@ -64,7 +68,7 @@ public class AccountManager
         switch (accountType)
         {
             case 1:
-                _accounts.Add(new SavingsAccount());
+                _accounts.Add(new SavingsAccount(_rewards, _leveling)); // Pass Rewards and Leveling instances
                 break;
             case 2:
                 _accounts.Add(new CheckingAccount());
@@ -134,7 +138,7 @@ public class AccountManager
 
     private void DisplayAccountDetails()
     {
-        Console.WriteLine("Account Details:");
+        Console.WriteLine($"\nAccount Details: Current Level: {_leveling.GetCurrentLevel()}");
         foreach (var account in _accounts)
         {
             Console.WriteLine(account);

@@ -4,9 +4,13 @@ public class SavingsAccount : Account
 {
     private const decimal InterestRate = 0.02m;
     private System.Timers.Timer _interestTimer; // Fully qualify Timer class
+    private Rewards _rewards;
+    private Leveling _leveling;
 
-    public SavingsAccount()
+    public SavingsAccount(Rewards rewards, Leveling leveling)
     {
+        _rewards = rewards;
+        _leveling = leveling;
         _interestTimer = new System.Timers.Timer(60000); // 1 minute
         _interestTimer.Elapsed += AccumulateInterest;
         _interestTimer.AutoReset = true;
@@ -21,6 +25,8 @@ public class SavingsAccount : Account
 
     public override void Deposit(decimal amount)
     {
+        _rewards.CheckRewards(Balance + amount, this);
+        _leveling.UpdatePoints(Balance + amount); // Pass the updated balance
         Balance += amount;
         Console.WriteLine($"Deposit of {amount:C} successful.");
     }
@@ -39,5 +45,9 @@ public class SavingsAccount : Account
     public override void MakePurchase(decimal amount)
     {
         Console.WriteLine("Purchases not allowed for savings account.");
+    }
+    public override string ToString()
+    {
+        return base.ToString() + $", Savings Account";
     }
 }

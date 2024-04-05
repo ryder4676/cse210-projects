@@ -22,4 +22,9 @@ public class CheckingAccount : Account
     {
         return base.ToString() + $", Checking Account";
     }
+    public void DepositReward(decimal amount)
+    {
+        Balance += amount;
+        Console.WriteLine($"Reward deposited: {amount:C}");
+    }
 }
