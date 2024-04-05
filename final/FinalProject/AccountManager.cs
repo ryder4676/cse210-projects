@@ -99,13 +99,14 @@ public class AccountManager
         if (account != null)
         {
             account.Deposit(amount);
-            _rewards.UpdateLevel(amount); // Update rewards after deposit
+            _leveling.UpdateLevel(account.Balance); // Update leveling after deposit with the updated account balance
         }
         else
         {
             Console.WriteLine("Account not found.");
         }
     }
+
 
     private void Withdraw()
     {
@@ -145,7 +146,7 @@ public class AccountManager
 
     private void DisplayAccountDetails()
     {
-        Console.WriteLine("\nAccount Details:");
+        Console.WriteLine($"\nAccount Details: Level: {_leveling.GetCurrentLevel()}");
         foreach (var account in _accounts)
         {
             Console.WriteLine(account);

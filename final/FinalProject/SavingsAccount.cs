@@ -54,6 +54,6 @@ public class SavingsAccount : Account
 
     public override string ToString()
     {
-        return base.ToString() + $", Savings Account, Level: {_leveling.GetCurrentLevel()}";
+        return base.ToString() + $", Savings Account";
     }
 }

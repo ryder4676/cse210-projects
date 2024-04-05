@@ -15,7 +15,8 @@ public class Rewards : Leveling
 
             if (currentIncrement > previousIncrement)
             {
-                // Reward logic specific to Rewards class
+                _level++;
+                AddAchievementRecord(amount); // Add achievement record
             }
         }
 
