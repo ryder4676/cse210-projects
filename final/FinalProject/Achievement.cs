@@ -17,7 +17,7 @@ public class Achievement : Leveling
         _previousBalance = amount;
     }
 
-    public void AddAchievementRecord(decimal amount)
+    public new void AddAchievementRecord(decimal amount)
     {
         _records.Add($"{DateTime.Now}: Deposit of ${amount} achieved a new level!");
     }
