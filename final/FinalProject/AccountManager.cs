@@ -65,7 +65,8 @@ public class AccountManager
     public void CreateAccount()
     {
         Console.WriteLine("\nChoose Account Type:");
-        Console.WriteLine("1. Savings Account");
+        Console.WriteLine("1. Savings Account ");
+        Console.WriteLine("   --> For every $500 you save you will increase your level!");
         Console.WriteLine("2. Checking Account");
         Console.WriteLine("3. Line of Credit Account");
         Console.Write("Enter account type: ");
